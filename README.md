@@ -1,10 +1,18 @@
-# Jorgefuertes Executor
+# Executor
 
-## How do I install these formulae?
+Execute commands in a fancy way
 
-`brew install jorgefuertes/executor/<formula>`
+## Executor info
 
-Or `brew tap jorgefuertes/executor` and then `brew install <formula>`.
+- [Homepage](https://github.com/jorgefuertes/executor)
+- [Download](https://github.com/jorgefuertes/executor/releases)
+
+## Install
+
+~~~bash
+brew tap jorgefuertes/executor
+brew install executor
+~~~
 
 Or, in a [`brew bundle`](https://github.com/Homebrew/homebrew-bundle) `Brewfile`:
 
