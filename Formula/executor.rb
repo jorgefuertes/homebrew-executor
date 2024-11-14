@@ -1,4 +1,4 @@
-VERSION = "1.0.10".freeze
+VERSION = "1.0.11".freeze
 
 class Executor < Formula
   desc "Execute commands in a fancy way"
@@ -9,8 +9,8 @@ class Executor < Formula
 
   bottle do
     root_url "https://github.com/jorgefuertes/executor/releases/download/v"+VERSION
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "804ec36d4a8de52b1ac16c98d1ab4de8f797e179ad52fbd2da6c10bac07ba622"
-    sha256 cellar: :any_skip_relocation, ventura:       "19e31550d3f246630de17b4b532f3c8c1054424b3fd4ef7eccc2f29f6f191115"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "63966053816d61c470756dfc8700c592333d27f56f38b4b1df79ccef8ed09066"
+    sha256 cellar: :any_skip_relocation, ventura:       "f5596c2692177b1fa75ffd91fe980bbecd333c87162f5a02ec5760eb600923d7"
   end
 
   depends_on "go" => :build
