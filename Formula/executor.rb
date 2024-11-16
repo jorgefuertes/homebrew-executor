@@ -14,8 +14,8 @@ class Executor < Formula
 
   bottle do
     root_url "https://github.com/jorgefuertes/executor/releases/download/v"+VERSION
-    sha256 cellar: :any_skip_relocation, arm64_ventura: "9914757eee5931e4e746ec2cc5eb8f8f590f0b397185a2d660a6f19f7447ae42"
-    sha256 cellar: :any_skip_relocation, ventura:       "296ecd09950856082531a86949ac6c5d7c85ebe66b0c894d04e3ce486af12393"
+    sha256 cellar: :any_skip_relocation, arm64_ventura: "c345ffd4258be05223f46a8d6129ae25c3e7f3b2467df3f799f2d6c46217b7a9"
+    sha256 cellar: :any_skip_relocation, ventura:       "63307fe050b1407847767eeb744c8ac1292f89c206344209d033f138b5a63e1a"
   end
 
   depends_on "go" => :build
