@@ -7,6 +7,11 @@ class Executor < Formula
   license "GPL-3.0-or-later"
   head "https://github.com/jorgefuertes/executor.git", branch: "main"
 
+  livecheck do
+    url :stable
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
+  end
+
   bottle do
     root_url "https://github.com/jorgefuertes/executor/releases/download/v"+VERSION
     sha256 cellar: :any_skip_relocation, arm64_ventura: "9914757eee5931e4e746ec2cc5eb8f8f590f0b397185a2d660a6f19f7447ae42"
