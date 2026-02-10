@@ -12,9 +12,6 @@ class Executor < Formula
     regex(/^v?(\d+(?:\.\d+)+)$/i)
   end
 
-  bottle do
-  end
-
   depends_on "go" => :build
 
   def install
