@@ -1,2 +1,5 @@
 .trunk
 work
+*.bottle.*
+*_output.txt
+failed/

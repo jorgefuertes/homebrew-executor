@@ -39,3 +39,96 @@ jobs:
         with:
           name: bottles_${{ matrix.os }}
           path: '*.bottle.*'
+
+  update-bottles:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: macos-latest
+    needs: test-bot
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Homebrew
+        uses: Homebrew/actions/setup-homebrew@master
+
+      - name: Get version from formula
+        id: get_version
+        run: |
+          VERSION=$(grep 'VERSION = ' Formula/executor.rb | cut -d'"' -f2)
+          echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Detected version: ${VERSION}"
+
+      - name: Download bottles from executor release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          VERSION="${{ steps.get_version.outputs.VERSION }}"
+          echo "Downloading bottles for version v${VERSION}..."
+          
+          gh release download "v${VERSION}" \
+            --repo jorgefuertes/executor \
+            --pattern "executor-${VERSION}.*.bottle.tar.gz" \
+            --dir bottles || {
+              echo "Warning: Bottles not found for v${VERSION}, skipping update"
+              exit 0
+            }
+          
+          ls -lh bottles/
+
+      - name: Update formula with bottle hashes
+        run: |
+          VERSION="${{ steps.get_version.outputs.VERSION }}"
+          
+          if [ ! -d bottles ] || [ -z "$(ls -A bottles)" ]; then
+            echo "No bottles downloaded, skipping formula update"
+            exit 0
+          fi
+          
+          # Generate checksums and update formula
+          cd bottles
+          
+          # Start building the new bottle block
+          echo "Updating Formula/executor.rb with new bottle hashes..."
+          
+          # Create temporary bottle lines
+          bottle_lines=""
+          for bottle in *.bottle.tar.gz; do
+            if [ -f "$bottle" ]; then
+              sha=$(shasum -a 256 "$bottle" | cut -d' ' -f1)
+              
+              # Extract platform from filename (e.g., executor-1.0.22.arm64_ventura.bottle.tar.gz)
+              platform=$(echo "$bottle" | sed -E 's/.*\.([^.]+)\.bottle\.tar\.gz/\1/')
+              
+              echo "  Found: ${platform} -> ${sha}"
+              bottle_lines="${bottle_lines}    sha256 cellar: :any_skip_relocation, ${platform}: \"${sha}\"\n"
+            fi
+          done
+          
+          # Update the formula file
+          cd ..
+          if [ -n "$bottle_lines" ]; then
+            # Use perl to replace the bottle block
+            perl -i -pe '
+              BEGIN { undef $/; }
+              s/bottle do.*?end/bottle do\n    root_url "https:\/\/github.com\/jorgefuertes\/executor\/releases\/download\/v#{VERSION}"\n'"$(echo -e "$bottle_lines")"'  end/s
+            ' Formula/executor.rb
+            
+            echo "Formula updated successfully"
+            cat Formula/executor.rb | grep -A 10 "bottle do"
+          fi
+
+      - name: Commit bottle updates
+        if: hashFiles('bottles/*.bottle.tar.gz') != ''
+        run: |
+          git config user.name "BrewTestBot"
+          git config user.email "1589480+BrewTestBot@users.noreply.github.com"
+          
+          if git diff --quiet Formula/executor.rb; then
+            echo "No changes to commit"
+          else
+            git add Formula/executor.rb
+            git commit -m "Update bottles for version ${{ steps.get_version.outputs.VERSION }}"
+            git push
+          fi
