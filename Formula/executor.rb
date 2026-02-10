@@ -1,4 +1,4 @@
-VERSION = "1.0.22".freeze
+VERSION = "1.0.24".freeze
 
 class Executor < Formula
   desc "Execute commands in a fancy way"
