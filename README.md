@@ -36,7 +36,7 @@ brew "executor"
 
 ## Usage
 
-For detailed usage instructions, run:
+After installation, run:
 
 ~~~bash
 executor --help
@@ -44,9 +44,19 @@ executor --help
 
 ## Documentation
 
-- `brew help`, `man brew` or check [Homebrew's documentation](https://docs.brew.sh)
-- For Executor documentation, visit the [official documentation](https://github.com/jorgefuertes/executor/wiki)
+- [Executor Documentation](https://github.com/jorgefuertes/executor) - Main project repository
+- [Homebrew Documentation](https://docs.brew.sh) - Homebrew usage and commands
+- [Latest Releases](https://github.com/jorgefuertes/executor/releases) - Download and changelog
+
+## About This Tap
+
+This is the official Homebrew tap for Executor. It provides pre-built bottles for macOS (arm64 and x86_64) to ensure fast installation without compilation.
+
+**Supported platforms:**
+- macOS Sequoia (15) - Apple Silicon & Intel
+- macOS Sonoma (14) - Apple Silicon & Intel  
+- macOS Ventura (13) - Apple Silicon & Intel
 
 ## License
 
-This project is licensed under the GPL-3.0-or-later License - see the [LICENSE](https://github.com/jorgefuertes/executor/blob/main/LICENSE) file for details.
+Executor is licensed under GPL-3.0-or-later. See the [LICENSE](https://github.com/jorgefuertes/executor/blob/main/LICENSE) file for details.
