@@ -114,13 +114,12 @@ jobs:
             # Use perl to replace or insert the bottle block
             if grep -q "bottle do" Formula/executor.rb; then
               # Replace existing bottle block
-              perl -i -pe '
-                BEGIN { undef $/; }
+              perl -i -0777 -pe '
                 s/bottle do.*?end/bottle do\n    root_url "https:\/\/github.com\/jorgefuertes\/executor\/releases\/download\/v#{VERSION}"\n'"$(echo -e "$bottle_lines")"'  end/s
               ' Formula/executor.rb
             else
               # Insert new bottle block after livecheck
-              perl -i -pe '
+              perl -i -0777 -pe '
                 s/(  livecheck do.*?end\n)/\1\n  bottle do\n    root_url "https:\/\/github.com\/jorgefuertes\/executor\/releases\/download\/v#{VERSION}"\n'"$(echo -e "$bottle_lines")"'  end\n/s
               ' Formula/executor.rb
             fi
