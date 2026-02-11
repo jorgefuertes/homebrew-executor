@@ -81,7 +81,7 @@ jobs:
         run: |
           VERSION="${{ steps.get_version.outputs.VERSION }}"
           
-          if [ ! -d bottles ] || [ -z "$(ls -A bottles)" ]; then
+          if [ ! -d bottles ] || [ -z "$(ls -A bottles 2>/dev/null)" ]; then
             echo "No bottles downloaded, skipping formula update"
             exit 0
           fi
