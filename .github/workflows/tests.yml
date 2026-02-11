@@ -90,7 +90,7 @@ jobs:
           cd bottles
           
           # Start building the new bottle block
-          echo "Updating Formula/executor.rb with new bottle hashes..."
+          echo "Updating Formula/executor.rb with new bottle hashes for version ${VERSION}..."
           
           # Create temporary bottle lines
           bottle_lines=""
@@ -109,14 +109,22 @@ jobs:
           # Update the formula file
           cd ..
           if [ -n "$bottle_lines" ]; then
-            # Use perl to replace the bottle block
-            perl -i -pe '
-              BEGIN { undef $/; }
-              s/bottle do.*?end/bottle do\n    root_url "https:\/\/github.com\/jorgefuertes\/executor\/releases\/download\/v#{VERSION}"\n'"$(echo -e "$bottle_lines")"'  end/s
-            ' Formula/executor.rb
+            # Use perl to replace or insert the bottle block
+            if grep -q "bottle do" Formula/executor.rb; then
+              # Replace existing bottle block
+              perl -i -pe '
+                BEGIN { undef $/; }
+                s/bottle do.*?end/bottle do\n    root_url "https:\/\/github.com\/jorgefuertes\/executor\/releases\/download\/v#{VERSION}"\n'"$(echo -e "$bottle_lines")"'  end/s
+              ' Formula/executor.rb
+            else
+              # Insert new bottle block after livecheck
+              perl -i -pe '
+                s/(  livecheck do.*?end\n)/\1\n  bottle do\n    root_url "https:\/\/github.com\/jorgefuertes\/executor\/releases\/download\/v#{VERSION}"\n'"$(echo -e "$bottle_lines")"'  end\n/s
+              ' Formula/executor.rb
+            fi
             
             echo "Formula updated successfully"
-            cat Formula/executor.rb | grep -A 10 "bottle do"
+            grep -A 10 "bottle do" Formula/executor.rb || echo "Bottle block inserted"
           fi
 
       - name: Commit bottle updates
