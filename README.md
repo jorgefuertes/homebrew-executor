@@ -1,26 +1,32 @@
-# Executor
+# ![Executor](https://raw.githubusercontent.com/jorgefuertes/executor/main/assets/executor.svg)
 
-## Execute commands in a fancy way
+## Homebrew Formula for Executor
 
-Executor is a command-line tool that provides an enhanced way to run and manage shell commands with advanced features and a clean interface.
+Official Homebrew tap for [Executor](https://github.com/jorgefuertes/executor) - Execute commands in a fancy way.
 
-## Info
+## What is Executor?
 
-- [Homepage](https://github.com/jorgefuertes/executor)
-- [Download](https://github.com/jorgefuertes/executor/releases)
-- License: GPL-3.0-or-later
+Executor is a command-line tool that provides an enhanced way to run and manage shell commands with advanced features and a clean interface. It hides log pollution and provides visual feedback, timing, and clear error output.
 
-## Features
+**Features:**
 
-- Enhanced command execution
-- Check for command existence
-- Log shadowing
-- Colorized output
-- Check for open port
-- Check for web response
-- Custom execution env vars
+- Enhanced command execution with colorized output and spinners
+- Command existence checking (`which`)
+- Log shadowing - output displayed only on error or when requested
+- Port availability checking (`port`)
+- Web response validation (`web`)
+- Automatic non-interactive mode detection
+- Custom execution environment variables
 
-## Install
+## Installation
+
+**Recommended method** - Install directly without tapping:
+
+~~~bash
+brew install jorgefuertes/executor/executor
+~~~
+
+Or tap the repository first, then install:
 
 ~~~bash
 brew tap jorgefuertes/executor
@@ -53,6 +59,7 @@ executor --help
 This is the official Homebrew tap for Executor. It provides pre-built bottles for macOS (arm64 and x86_64) to ensure fast installation without compilation.
 
 **Supported platforms:**
+
 - macOS Sequoia (15) - Apple Silicon & Intel
 - macOS Sonoma (14) - Apple Silicon & Intel  
 - macOS Ventura (13) - Apple Silicon & Intel
