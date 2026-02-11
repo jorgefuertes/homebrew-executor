@@ -56,6 +56,7 @@ jobs:
       - name: Get version from formula
         id: get_version
         run: |
+          # shellcheck disable=SC2086
           VERSION=$(grep 'VERSION = ' Formula/executor.rb | cut -d'"' -f2)
           echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
           echo "Detected version: ${VERSION}"
@@ -79,6 +80,7 @@ jobs:
 
       - name: Update formula with bottle hashes
         run: |
+          # shellcheck disable=SC2034
           VERSION="${{ steps.get_version.outputs.VERSION }}"
           
           if [ ! -d bottles ] || [ -z "$(ls -A bottles 2>/dev/null)" ]; then
