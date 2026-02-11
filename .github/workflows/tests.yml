@@ -139,5 +139,5 @@ jobs:
           else
             git add Formula/executor.rb
             git commit -m "Update bottles for version ${{ steps.get_version.outputs.VERSION }}"
-            git push
+            git push origin main
           fi
