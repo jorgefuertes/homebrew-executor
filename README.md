@@ -1,5 +1,9 @@
 # ![Executor](https://raw.githubusercontent.com/jorgefuertes/executor/main/assets/executor.svg)
 
+![GitHub Downloads](https://img.shields.io/github/downloads/jorgefuertes/homebrew-executor/total)
+![GitHub Release](https://img.shields.io/github/v/release/jorgefuertes/homebrew-executor)
+![License](https://img.shields.io/github/license/jorgefuertes/homebrew-executor)
+
 ## Homebrew Formula for Executor
 
 Official Homebrew tap for [Executor](https://github.com/jorgefuertes/executor) - Execute commands in a fancy way.
