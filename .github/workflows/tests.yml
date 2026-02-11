@@ -58,7 +58,7 @@ jobs:
         run: |
           # shellcheck disable=SC2086
           VERSION=$(grep 'VERSION = ' Formula/executor.rb | cut -d'"' -f2)
-          echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
+          echo "VERSION=${VERSION}" >> "$GITHUB_OUTPUT"
           echo "Detected version: ${VERSION}"
 
       - name: Download bottles from executor release
